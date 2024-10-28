@@ -1,0 +1,7 @@
+Create a system with customers, orders, items and products.
+
+Do not generate any logic, including logic bank.
+
+Do not generate derived attributes such as Customer.balance, Customer.credit_limit, Order.amount_total, Item.unit_price, or Item.amount.
+
+Include a notes field for orders.

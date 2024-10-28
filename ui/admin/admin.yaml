@@ -1,0 +1,310 @@
+about:
+  date: October 28, 2024 05:38:51
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 10
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Category:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: description
+    - name: id
+    description: Represents categories for products.
+    info_list: Represents categories for products.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: ProductCategoryList
+      resource: ProductCategory
+    type: Category
+    user_key: name
+  Customer:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: email
+    - name: phone
+    - name: address
+    - name: credit_limit
+    - name: id
+    description: Stores information about customers.
+    info_list: Stores information about customers.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    type: Customer
+    user_key: name
+  Employee:
+    attributes:
+    - label: ' first_name*'
+      name: first_name
+      search: true
+      sort: true
+    - name: last_name
+    - name: title
+    - name: id
+    description: Contains employee details.
+    info_list: Contains employee details.
+    type: Employee
+    user_key: first_name
+  Inventory:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+    - name: store_id
+    - name: quantity
+    description: Tracks inventory levels for products at different store locations.
+    info_list: Tracks inventory levels for products at different store locations.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    - direction: toone
+      fks:
+      - store_id
+      name: store
+      resource: Store
+    type: Inventory
+    user_key: id
+  Item:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: product_id
+    - name: quantity
+    - name: unit_price
+    description: Represents items included in orders.
+    info_list: Represents items included in orders.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Item
+    user_key: id
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: order_date
+      type: DATETIME
+    - name: notes
+    description: Represents orders placed by customers.
+    info_list: Represents orders placed by customers.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: ItemList
+      resource: Item
+    - direction: tomany
+      fks:
+      - order_id
+      name: ShipmentList
+      resource: Shipment
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+    user_key: id
+  Product:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: description
+    - name: price
+    - name: id
+    description: Contains information about products available for orders.
+    info_list: Contains information about products available for orders.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: InventoryList
+      resource: Inventory
+    - direction: tomany
+      fks:
+      - product_id
+      name: ItemList
+      resource: Item
+    - direction: tomany
+      fks:
+      - product_id
+      name: ProductCategoryList
+      resource: ProductCategory
+    - direction: tomany
+      fks:
+      - product_id
+      name: ProductSupplierList
+      resource: ProductSupplier
+    type: Product
+    user_key: name
+  ProductCategory:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: category_id
+    - name: product_id
+    description: Links products with categories.
+    info_list: Links products with categories.
+    tab_groups:
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: Category
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: ProductCategory
+    user_key: id
+  ProductSupplier:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+    - name: supplier_id
+    - name: supply_price
+    description: Links products with suppliers.
+    info_list: Links products with suppliers.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: ProductSupplier
+    user_key: id
+  Shipment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: shipment_date
+      type: DATETIME
+    - name: tracking_number
+    description: Details shipments for orders.
+    info_list: Details shipments for orders.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Shipment
+    user_key: id
+  Store:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: location
+    - name: id
+    description: Represents physical store locations.
+    info_list: Represents physical store locations.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - store_id
+      name: InventoryList
+      resource: Inventory
+    type: Store
+    user_key: name
+  Supplier:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: contact_info
+    - name: id
+    description: Stores supplier details for products.
+    info_list: Stores supplier details for products.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: ProductSupplierList
+      resource: ProductSupplier
+    type: Supplier
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

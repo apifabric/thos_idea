@@ -1,0 +1,117 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Project DBML {
+  Note: '''
+Category: Represents categories for products.
+Customer: Stores information about customers.
+Employee: Contains employee details.
+Inventory: Tracks inventory levels for products at different store locations.
+Product: Contains information about products available for orders.
+Store: Represents physical store locations.
+Item: Represents items included in orders.
+Order: Represents orders placed by customers.
+ProductCategory: Links products with categories.
+ProductSupplier: Links products with suppliers.
+Supplier: Stores supplier details for products.
+Shipment: Details shipments for orders.
+'''
+}
+
+Table Category {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description VARCHAR 
+    }
+
+Table Customer {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    phone VARCHAR 
+    address VARCHAR 
+    credit_limit FLOAT 
+    }
+
+Table Employee {
+    id INTEGER [primary key]
+    first_name VARCHAR 
+    last_name VARCHAR 
+    title VARCHAR 
+    }
+
+Table Inventory {
+    id INTEGER [primary key]
+    store_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table Product {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description VARCHAR 
+    price FLOAT 
+    }
+
+Table Store {
+    id INTEGER [primary key]
+    name VARCHAR 
+    location VARCHAR 
+    }
+
+Table Item {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    unit_price FLOAT 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    order_date DATETIME 
+    notes VARCHAR 
+    }
+
+Table ProductCategory {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    category_id INTEGER 
+    }
+
+Table ProductSupplier {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    supplier_id INTEGER 
+    supply_price FLOAT 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_info VARCHAR 
+    }
+
+Table Shipment {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    shipment_date DATETIME 
+    tracking_number VARCHAR 
+    }
+
+
+
+// Relationships
+    Ref: Inventory.(product_id) < Product.(id)
+    Ref: Inventory.(store_id) < Store.(id)
+    Ref: Item.(order_id) < Order.(id)
+    Ref: Item.(product_id) < Product.(id)
+    Ref: Order.(customer_id) < Customer.(id)
+    Ref: ProductCategory.(category_id) < Category.(id)
+    Ref: ProductCategory.(product_id) < Product.(id)
+    Ref: ProductSupplier.(product_id) < Product.(id)
+    Ref: ProductSupplier.(supplier_id) < Supplier.(id)
+    Ref: Shipment.(order_id) < Order.(id)
